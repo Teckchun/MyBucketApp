@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <title>MyBucketApp</title>
- 
- 
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
- 
-</head>
- 
-<body>
- 
+{% extends "layout.html" %}
+{% block head %}
+
+
+  {{ super() }}
+
+
+
+{% endblock %}
+
+
+{% block content%}
+
     <div class="container">
         <div class="header">
             <nav>
@@ -26,13 +23,13 @@
                     </li>
                 </ul>
             </nav>
-            <h3 class="text-muted">Python Flask App</h3>
+            <h3 class="text-muted">Python Testing Flask App</h3>
         </div>
  
         <div class="jumbotron">
-            <h1>Bucket List App</h1>
+            <h1>MyBucketApp</h1>
             <p class="lead"></p>
-            <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign up today</a>
+            <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign up</a>
             </p>
         </div>
  
@@ -61,10 +58,8 @@
         </div>
  
         <footer class="footer">
-            <p>&copy; Company 2015</p>
+            <p>&copy; TC 2017</p>
         </footer>
  
     </div>
-</body>
- 
-</html>
+{% endblock %}
