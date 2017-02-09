@@ -17,10 +17,6 @@ app.config['MYSQL_DATABASE_DB'] = 'BucketList'
 mysql.init_app(app)
 
 
-
-
-
-
 @app.route('/')
 @app.route('/main')
 def index():
