@@ -2,25 +2,51 @@ from peewee import *
 from flask import (Flask,render_template,request,
     json)
 from werkzeug import generate_password_hash, check_password_hash
-mysql_db = MySQLDatabase('BucketList',user='root',password='root')
-# ('database_name', user='www-data', charset='utf8mb4')
-class User(Model):
-    """docstring for ClassName"""
-    class Meta:
-        database = mysql_db
-        user_name = CharField(max_length=45, unique=True)
-        user_username = CharField(max_length=45)
-        user_password = CharField(max_length=45)
-    #create user
-    def insertUser():
-        _name = request.form['inputName']
-        _email = request.form['inputEmail']
-        _password = request.form['inputPassword']
 
-        User.create(user_name=_name,
-                user_username = _email,
-                user_password = _password
-                )
+database = SqliteDatabase(DATABASE)
+
+class BaseModel(Model):
+    class Meta:
+        database = database
+
+class User(BaseModel):
+    username = CharField(unique=True)
+    password = CharField()
+    email = CharField()
+    join_date = DateTimeField()
+
+    class Meta:
+        order_by = ('username',)
+class Relationship(BaseModel):
+    from_user = ForiegnKeyField(User,related_name='relationships')
+    to_user = ForiegnKeyField(User,related_name='related_to')
+
+    class Meta:
+        indexes = (
+            # Specify a unique multi-column index on from/to-user.
+            (('from_user', 'to_user'), True),
+        )
+
+class Message(BaseModel):
+    user = ForeignKeyField(User)
+    content = TextField()
+    pub_date = DateTimeField()
+
+    class Meta:
+        order_by = ('-pub_date',)
+
+def create_tables():
+    database.connect()
+    database.create_tables([User, Relationship, Message])
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
         mysql_db.connect()
         insertUser()

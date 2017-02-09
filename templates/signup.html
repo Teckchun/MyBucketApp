@@ -33,7 +33,7 @@
         <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-         
+         <div id="result"></div>
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
       </form>
       </div>
@@ -55,9 +55,27 @@
             type:'POST',
             success:function(response){
               console.log("RESPONSE: "+response)
+              var msg = JSON.parse(response);
+              var msgStr = msg.html
+              if(msgStr=='<span>Please fill out required fields!</span>'){
+                console.log(msg.html)
+                $("#result").css({"color":"red"})
+                $("#result").append(msgStr)
+              }
+              else if(!msgStr){
+                $("#result").css({"color":"red"})
+                $("#result").append(msgStr+" OR urser may already exists")
+              }
+              else{
+                 $("#result").css({"color":"green"})
+                 $("#result").append(msgStr)
+              }
+              
             },
             error:function(error){
+
               console.log('ERROR: '+error)
+
             }
           })
         })

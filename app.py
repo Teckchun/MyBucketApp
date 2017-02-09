@@ -5,13 +5,15 @@ from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
-#configure mysql
 mysql = MySQL()
 # MySQL configurations
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'BucketList'
-app.config['MYSQL_HOST'] = 'localhost'
+
+
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_PORT'] = 3306
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'BucketList'
 mysql.init_app(app)
 
 
@@ -45,8 +47,8 @@ def SignUp():
             
             conn = mysql.connect()
             cursor = conn.cursor()
-            _hashed_password = generate_password_hash(_password)
-            cursor.callproc('sp_createUser',(_name,_email,_hashed_password))
+            # _hashed_password = generate_password_hash(_password)
+            cursor.callproc('sp_createUser',(_name,_email,_password))
             data = cursor.fetchall()
 
             if len(data) is 0:
