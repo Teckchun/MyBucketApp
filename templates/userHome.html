@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <title>Python Flask Bucket List App</title>
+{% extends "layout.html" %}
+ {% block head %}
+
+  {{ super() }}
  
  
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
+ <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <!-- <link href="../static/css/signup.css" rel="stylesheet"> -->
    
@@ -34,9 +33,9 @@
         display: none;
     }
 </style>
-</head>
- 
-<body>
+{% endblock %}
+
+{% block content%}
  
     <div class="container">
         <div class="header">
@@ -135,6 +134,7 @@
                         $('#editModal').modal();
                         // set editId to localStorage
                         localStorage.setItem('editId',$(elm).attr('data-id'));
+
                     },
                     error: function(error) {
                         console.log(error);
@@ -159,6 +159,7 @@ function Delete() {
             if (result.status == 'OK') {
                 $('#deleteModal').modal('hide');
                 GetWishes();
+                location.reload();
             } else {
                 alert(result.status);
             }
@@ -186,6 +187,7 @@ collected the editId from localStorage, so inside the Edit function save the ID 
             $('#editModal').modal('hide');
             // Re populate the grid
             GetWishes();
+            location.reload();
         },
         error: function(error) {
             console.log(error);
@@ -254,6 +256,7 @@ collected the editId from localStorage, so inside the Edit function save the ID 
         </div>
     </li>
 </script>
+ {% endblock %}
 </body>
  
 </html>
