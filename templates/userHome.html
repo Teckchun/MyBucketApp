@@ -10,12 +10,28 @@
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="../static/css/signup.css" rel="stylesheet">
     <link href="../static/signup.css" rel="stylesheet">
+    
     <script
   src="https://code.jquery.com/jquery-3.1.1.js"
   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
   crossorigin="anonymous"></script>
+  <!-- jquery template -->
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
     <!-- <script src="static/getwish.js"></script> -->
- 
+    <!-- bootstrap js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+ <style>
+    .trash {
+        color: rgb(209, 91, 71);
+    }
+    .panel-body .checkbox {
+        display: inline-block;
+        margin: 0px;
+    }
+    .list-group {
+        margin-bottom: 0px;
+    }
+</style>
 </head>
  
 <body>
@@ -35,10 +51,66 @@
  
         <div class="jumbotron">
             <h1>Welcome {{ userName }}</h1>
+
+            <div class="row">
+                 <div class="col-md-12">
+ 
+                    <div class="panel-body">
+ 
+                     <ul id="ulist" class="list-group">
+ 
+ 
+ 
+                     </ul>
+                    </div>
+    
+                </div>
+            </div>
  
         </div>
- 
- 
+<!-- edit pop up modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="editModalLabel">Update Wish</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Title:</label>
+                        <input type="text" class="form-control" id="editTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Description:</label>
+                        <textarea class="form-control" id="editDescription"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnUpdate" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- jquery template -->
+ <script id="listTemplate" type="text/x-jQuery-tmpl">
+    <li class="list-group-item">
+        <div class="checkbox">
+            <label>
+                ${Title}
+            </label>
+        </div>
+        <div class="pull-right action-buttons">
+            <a data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-pencil"></span></a>
+            
+        </div>
+    </li>
+</script>
         <footer class="footer">
             <p>&copy; Company 2015</p>
         </footer>
@@ -53,18 +125,20 @@
                 console.log(res);
                 var txt = "";
                 var jsobj = JSON.parse(res);
-                for(var i in jsobj){
-                    console.log("RES"+jsobj)
+        //         for(var i in jsobj){
+        //             console.log("RES"+jsobj)
 
-                txt +=`<div class="list-group">
-          <a href="#" class="list-group-item active">
-            <h4 class="list-group-item-heading">${jsobj[i].Title}</h4>
-            <p class="list-group-item-text">${jsobj[i].Description}</p>
-          </a>
-        </div>` 
+        //         txt +=`<div class="list-group">
+        //   <a href="#" class="list-group-item active">
+        //     <h4 class="list-group-item-heading">${jsobj[i].Title}</h4>
+        //     <p class="list-group-item-text">${jsobj[i].Description}</p>
+        //   </a>
+        // </div>` 
 
-                }
-                $('.jumbotron').append(txt);
+        //         }
+         // Append to the template
+                $('#listTemplate').tmpl(jsobj).appendTo('#ulist');
+                // $('.jumbotron').append(txt);
 
             },
             error: function(error) {
