@@ -8,10 +8,22 @@ Database script located in folder MyBucketApp/sqlscript -> MyBucketList.sql
   Language: Python 2.7 <br>
   #Frontend: <br>
 HTML,CSS,Bootstrap,Bootswatch,jQuery,jQuery Template,Jinja2
-# How to run:
-cd to project folder and run command python app.py
+# Deployment:
+1. clone the project
+2. cd to project folder
+3. install some library: 
+  $. pip install requests
+  $. pip install flaskext.mysql
+4. open app.py and change database configuration
+   app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+   app.config['MYSQL_DATABASE_PORT'] = 3306
+   app.config['MYSQL_DATABASE_USER'] = 'your_db_username'
+   app.config['MYSQL_DATABASE_PASSWORD'] = 'your_db_password'
+   app.config['MYSQL_DATABASE_DB'] = 'your_databaseName'
+
 # How to access
 url: http://localhost:5000   (for index page)
+
 
 
 
