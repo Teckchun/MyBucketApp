@@ -17,14 +17,14 @@ HTML,CSS,Bootstrap,Bootswatch,jQuery,jQuery Template,Jinja2
   $ pip install flaskext.mysql <br>
 </code>
 4. open app.py and change database configuration
-<code> 
-   app.config['MYSQL_DATABASE_HOST'] = 'localhost' <br>
-   app.config['MYSQL_DATABASE_PORT'] = 3306 <br>
-   app.config['MYSQL_DATABASE_USER'] = 'your_db_username' <br>
-   app.config['MYSQL_DATABASE_PASSWORD'] = 'your_db_password' <br>
-   app.config['MYSQL_DATABASE_DB'] = 'your_databaseName' <br>
+<pre>
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_PORT'] = 3306
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'BucketList'
 
-</code>
+</pre>
 # How to access
 url: http://localhost:5000   (for index page)
 
