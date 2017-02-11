@@ -12,10 +12,10 @@ HTML,CSS,Bootstrap,Bootswatch,jQuery,jQuery Template,Jinja2
 1. clone the project
 2. cd to project folder
 3. install some library:  <br>
-<code>
+<pre>
   $ pip install requests <br>
   $ pip install flaskext.mysql <br>
-</code>
+</pre>
 4. open app.py and change database configuration
 <pre>
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
