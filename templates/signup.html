@@ -60,15 +60,10 @@
               if(msgStr=='<span>Please fill out required fields!</span>'){
                 console.log(msg.html)
                 $("#result").css({"color":"red"})
-                $("#result").append(msgStr)
-              }
-              else if(!msgStr){
-                $("#result").css({"color":"red"})
-                $("#result").append(msgStr+" OR urser may already exists")
-              }
-              else{
+                $("#result").html(msgStr)
+              }else{
                  $("#result").css({"color":"green"})
-                 $("#result").append(msgStr)
+                 $("#result").html("Your account has been created!")
               }
               
             },
