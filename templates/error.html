@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <title>Unauthorized Access:: Python Flask Bucket List App</title>
- 
- 
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
- 
- 
-</head>
- 
-<body>
+{% extends "layout.html" %}
+ {% block head %}
+
+  {{ super() }}
+  <link href="../static/signup.css" rel="stylesheet">
+    <script
+  src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+ {% endblock %}
+
+{% block content%}
  
     <div class="container">
         <div class="header">
@@ -20,7 +17,7 @@
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation" class="active"><a href="#">Home</a>
                     </li>
-                    <li role="presentation"><a href="/showSignin">Sign In</a>
+                    <li role="presentation"><a href="/showSignIn">Sign In</a>
                     </li>
                     <li role="presentation"><a href="/showSignUp">Sign Up</a>
                     </li>
@@ -40,6 +37,7 @@
         </footer>
  
     </div>
+     {% endblock %}
 </body>
  
 </html>

@@ -7,7 +7,7 @@ from werkzeug import generate_password_hash, check_password_hash
 from flask import session
 
 app = Flask(__name__)
-app.secret_key = 'why would I tell you my secret key?'
+app.secret_key = 'appSecret'
 
 mysql = MySQL()
 # MySQL configurations
@@ -24,22 +24,40 @@ mysql.init_app(app)
 @app.route('/')
 @app.route('/main')
 def index():
-	return render_template('index.html')
+    if session.get('user'):
+	    return render_template('userHome.html',userName=session['username'])
+    else:
+        return render_template('index.html')
 
 #sign up view
 @app.route('/showSignUp')
 def ShowSignUp():
-	return render_template('signup.html')
+    if session.get('user'):
+        return redirect('/userHome')
+        # return render_template('userHome.html',userName=session['username'])
+    else:
+        return render_template('signup.html')
 
 #sign in view
 @app.route('/showSignIn')
 def showSignIn():
     return render_template('signin.html')
 
+# userHome
+@app.route('/userHome')
+def userHome():
+    if session.get('user'):
+        return render_template('userHome.html',userName=session['username'],displayName=session['displayName'])
+    else:
+        return render_template('error.html',error="Unauthorized Access")
+    return render_template('userHome.html')    
+
+
 #validate Login
 @app.route('/validateLogin',methods=['POST'])
 def validateLogin():
     try:
+        #get user name and password from input fields
         _username = request.form['inputEmail']
         _password = request.form['inputPassword']
  
@@ -48,19 +66,27 @@ def validateLogin():
         # connect to mysql
  
         con = mysql.connect()
+        # create cursor to call procedure
         cursor = con.cursor()
+        #calling validate login store procedure to validate username
         cursor.callproc('sp_validateLogin',(_username,))
+        # Get the fetched records from the cursor
+
         data = cursor.fetchall()
- 
- 
- 
- 
         if len(data) > 0:
+            print(data)
             print(_password)
+            '''
+            check_password_hash to check if the returned hash password matches
+            the password entered by the user.
+            '''
+            print("hey")
             if check_password_hash(str(data[0][3]),_password):
                 session['user'] = data[0][0]
+                session['displayName'] = data[0][1]
+                print(data[0][1])
                 session['username'] = _username
-                print("data [0][0]..{}".format(data[0][0]))
+                # print("data [0][0]..{}".format(data[0][0]))
                 print("success")
                 return redirect('/userHome')
             else:
@@ -80,14 +106,7 @@ def validateLogin():
 
 
 
-# userHome
-@app.route('/userHome')
-def userHome():
-    if session.get('user'):
-        return render_template('userHome.html',userName=session['username'])
-    else:
-        return render_template('error.html',error="Unauthorized Access")
-    return render_template('userHome.html')      
+  
 
 @app.route('/SignUp',methods=['POST'])
 def SignUp():
